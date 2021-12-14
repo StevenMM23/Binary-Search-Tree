@@ -53,7 +53,7 @@ void Inorder(Node* p)
 {
 	if (p)
 	{
-		printf("Los elementos son:\n");
+		
 		Inorder(p->lchild);
 		printf("%d\n", p->data);
 		Inorder(p->rchild);
@@ -192,6 +192,7 @@ int main()
 				cout << "No se encuentra dicho numero";
 			break;
 		case 4:
+			printf("Los elementos son:\n");
 			Inorder(root);
 			break;
 
