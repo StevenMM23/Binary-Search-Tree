@@ -60,27 +60,27 @@ void Inorder(Node* p)
 	}
 }
 
-Node* search(int key)
+Node* search(int key) // Metodo para buscar un numero dentro del arbol
 {
-	Node* t = root;
+	Node* t = root; // Se crea un nodo t y se iguala a root (El inicio del arbol)
 
-	while (t != nullptr)
+	while (t != nullptr) // Mientras el nodo t, no este aputando a NULL
 	{
-		if (key == t->data)
+		if (key == t->data) // Si el key es igual al dato que guarda t....
 			return t;
-		if (key < t->data)
+		if (key < t->data) // Si el key es menor al dato que guarda t muevete al hijo izquierdo
 			t = t->lchild;
 		else
-			t = t->rchild;
+			t = t->rchild; // SI el key es mayor al dato que guarda t mueve al hijo derecho
 	}
-	return nullptr;
+	return nullptr; //Si no se encuentra nada retorname NULLPTR;
 }
 
 Node* RInsert(Node* p, int key) //Insertar Nodo con metodo Recursivo
 {
-	if (p == nullptr)
+	if (p == nullptr) // Si no hay ningun nodo introducido previamente...
 	{
-		Node* temp = nullptr; // Nodo puntero temp apunta a null;
+		Node* temp = nullptr; //No tiene porque apuntar a NULL pero es buena práctica
 		temp = new Node(); // Se crea un Nodo (Espacio en la memoria)
 		temp->data = key; // Se le asigna al nodo el valor key (Parametro) a data;
 		temp->lchild = temp->rchild = nullptr; //Los hijos del Nodo temp apuntan a nulo
