@@ -10,40 +10,43 @@ struct Node
 	Node* lchild; //Hijo Izquierdo
 	Node* rchild; //Hijo Derecho
 	int data; // El dato del nodo;
-}* root = nullptr;
+}* root = nullptr; // Declaracion de la raiz
 
-void Insert(int key)
+void insert(int key)
 {
 	// Insertar sin Recursividad
 
-	Node* t = root;
-	Node* r = nullptr;
-	Node* p = nullptr;
+	Node* temp = root; // Nodo Temporal
+	Node* insertNode= nullptr; // Nodo que se va a insertar
+	Node* p = nullptr; // Se usa para crear new Node()
 
-	if (root == nullptr)
+	if (root == nullptr) // Si no hay nodos....
 	{
-		p = static_cast<Node*>(malloc(sizeof(Node)));
-		p->data = key;
-		p->lchild = p->rchild = nullptr;
-		root = p;
+		p = new Node(); // Se crea un nodo
+		p->data = key; // Se le asigna el dato del parametro
+		p->lchild = p->rchild = nullptr; // Sus hijos apuntan a nulo
+		root = p; // Raiz ahora es p (El primer nodo)
 		return;
 	}
-	while (t != nullptr)
+	while (temp != nullptr) // Mientras temp sea diferente de NULL (Recordando que se iguala a root)
 	{
-		r = t;
-		if (key < t->data)
-			t = t->lchild;
-		else if (key > t->data)
-			t = t->rchild;
+		insertNode = temp; // Nodo que se insertara se iguala a temp (Raiz)
+		if (key < temp->data) // Si numero es menor al dato de temp
+			temp = temp->lchild; 
+		else if (key > temp->data) // SI el numero es mayor al dato de temp
+			temp = temp->rchild;
 		else
 			return;
-	}
-	p = static_cast<Node*>(malloc(sizeof(Node)));
-	p->data = key;
+	} // Al finalizar el While, estaremos en la capa que se insertará el key (Nuevo valor)
+
+	//Se crea un nuevo nodo y se le asigna a p el valor del parametro y sus hijos estaran apuntando a NULLPTR
+	p = new Node();
+	p->data = key; 
 	p->lchild = p->rchild = nullptr;
 
-	if (key < r->data) r->lchild = p;
-	else r->rchild = p;
+	// Se determina si el valor introducido ira a la izquierda (Menores) o a la derecha (Mayores)
+	if (key < insertNode->data) insertNode->lchild = p;
+	else insertNode->rchild = p;
 }
 
 void Inorder(Node* p)
@@ -73,19 +76,17 @@ Node* search(int key)
 	return nullptr;
 }
 
-Node* RInsert(Node* p, int key)
+Node* RInsert(Node* p, int key) //Insertar Nodo con metodo Recursivo
 {
-	// Insertar Recursivo
-
 	if (p == nullptr)
 	{
-		Node* t = nullptr;
-		t = static_cast<Node*>(malloc(sizeof(Node)));
-		t->data = key;
-		t->lchild = t->rchild = nullptr;
-		return t;
+		Node* temp = nullptr; // Nodo puntero temp apunta a null;
+		temp = new Node(); // Se crea un Nodo (Espacio en la memoria)
+		temp->data = key; // Se le asigna al nodo el valor key (Parametro) a data;
+		temp->lchild = temp->rchild = nullptr; //Los hijos del Nodo temp apuntan a nulo
+		return temp;
 	}
-	if (key < p->data)
+	if (key < p->data) // Si no es nulo entonces...
 		p->lchild = RInsert(p->lchild, key);
 	else if (key > p->data)
 		p->rchild = RInsert(p->rchild, key);
