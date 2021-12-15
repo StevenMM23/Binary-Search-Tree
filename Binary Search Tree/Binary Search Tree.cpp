@@ -1,6 +1,4 @@
-// Binary Search Tree.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
+//Steven Martinez
 #include <iostream>
 
 using namespace std;
