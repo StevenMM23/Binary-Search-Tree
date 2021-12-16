@@ -48,14 +48,14 @@ void insert(int key)
 	else insertNode->rchild = p;
 }
 
-void Inorder(Node* p)
+void Inorder(Node* p) // Muestra los numeros en orden ascendente
 {
-	if (p)
+	if (p) // Si p es true (No es null)
 	{
 		
-		Inorder(p->lchild);
-		printf("%d\n", p->data);
-		Inorder(p->rchild);
+		Inorder(p->lchild); // Entra al nodo izquierdo hasta llegar a lo mas profundo 
+		printf("%d\n", p->data); // Imprime el dato
+		Inorder(p->rchild); // Comprueba si hay nodo Derecho
 	}
 }
 
@@ -94,54 +94,54 @@ Node* RInsert(Node* p, int key) //Insertar Nodo con metodo Recursivo
 
 int Height(Node* p)
 {
-	int x, y;
-	if (p == nullptr) return 0;
-	x = Height(p->lchild);
-	y = Height(p->rchild);
-	return x > y ? x + 1 : y + 1;
+	int x, y; // Se crea dos variables (x) y (y)
+	if (p == nullptr) return 0; // Si el nodo que se esta evaluando es NULL retorna 0
+	x = Height(p->lchild); // Se evalua la altura por la izquierda
+	y = Height(p->rchild); // Se evalua la altura por la derecha
+	return x > y ? x + 1 : y + 1; // Retorna cual incrementa entre x y y (Izquierda y derecha)
 }
 
-Node* InPre(Node* p)
+Node* InPre(Node* p) // Busca el Sucesor en el lado derecho del arbol Binario...
 {
 	while (p && p->rchild != nullptr)
 		p = p->rchild;
 	return p;
 }
 
-Node* InSucc(Node* p)
+Node* InSucc(Node* p) // Busca el Sucesor en el lado izquierdo del arbol Binario...
 {
 	while (p && p->lchild != nullptr)
 		p = p->lchild;
 	return p;
 }
 
-Node* Delete(Node* p, int key)
+Node* Delete(Node* p, int key) //Se coge como parametro el Root y el numero a eliminar
 {
-	Node* q;
-	if (p == nullptr)
-		return nullptr;
-	if (p->lchild == nullptr && p->rchild == nullptr)
+	Node* q; // Se crea el nodo donde una vez eliminado el dato, este se posiciona donde le corresponde
+	if (p == NULL) // Si el arbol no tiene nada...
+		return NULL;
+	if (p->lchild == nullptr && p->rchild == nullptr) // Si el hijo izquierdo y el hijo derecho son null entonces...
 	{
-		if (p == root)
-			root = nullptr;
-		free(p);
+		if (p == root) // Si el valor p es el root
+			root = nullptr; 
+		delete(p);
 		return nullptr;
 	}
-	if (key < p->data)
-		p->lchild = Delete(p->lchild, key);
-	else if (key > p->data)
-		p->rchild = Delete(p->rchild, key);
+	if (key < p->data) // Si el dato es menor al dato que se esta evaluando en el nodo p
+		p->lchild = Delete(p->lchild, key); // p se movera al nodo izquierdo y usará recursividad para evaluar dicho nodo con el dato a eliminar
+	else if (key > p->data) // Si el dato es mayor al nodo que se esta evaluando....
+		p->rchild = Delete(p->rchild, key); // Se movera al nodo derecho y utilizará recursividad para evualar dicho nodo
 	else
 	{
 		if (Height(p->lchild) > Height(p->rchild))
 		{
-			q = InPre(p->lchild);
+			q = InPre(p->lchild); //Inorder Predecesor hace que el numero que se elija sea el numero de la rama izquierda
 			p->data = q->data;
 			p->lchild = Delete(p->lchild, q->data);
 		}
 		else
 		{
-			q = InSucc(p->rchild);
+			q = InSucc(p->rchild); // Inorder Succesor hace que el numero que se elija sea el numero de la rama derecha 
 			p->data = q->data;
 			p->rchild = Delete(p->rchild, q->data);
 		}
@@ -151,7 +151,7 @@ Node* Delete(Node* p, int key)
 
 int main()
 {
-	Node* temp;
+	Node* temp; // El nodo temp es el nodo que tiene 
 	int ans, number;
 	do
 	{
@@ -177,8 +177,7 @@ int main()
 			system("cls");
 			printf("Introduzca el numero que desea Eliminar: ");
 			cin >> number;
-			if (Delete(root, number) != nullptr) printf("Se ha eliminado el valor %d", number);
-			else printf("El valor %d no esta dentro del arbol", number);
+			Delete(root, number);
 			printf("");
 			break;
 		case 3:
